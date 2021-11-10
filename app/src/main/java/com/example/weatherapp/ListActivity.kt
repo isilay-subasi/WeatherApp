@@ -9,16 +9,17 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.example.weatherapp.databinding.ActivityListBinding
-import com.example.weatherapp.model.WeatherData
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
+import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ListActivity : AppCompatActivity() {
@@ -68,11 +69,14 @@ class ListActivity : AppCompatActivity() {
                     ) {
                         // value of item that is clicked
                         val itemValue = binding.listView.getItemAtPosition(position) as String
+                        city[position] = cityList!![position]!!.title
                         woeid[position]=cityList!![position]!!.woeid.toString()
                         System.out.println(woeid[position].toString()+"/")// woeid
 
                         var urlString : String = woeid[position].toString()+"/"
-                        run("https://www.metaweather.com/api/location/"+urlString)
+                        run("https://www.metaweather.com/api/location/"+urlString,city[position])
+
+
 
                     }
                 }
@@ -95,7 +99,7 @@ class ListActivity : AppCompatActivity() {
 
     }
 
-    fun run(url: String) {
+    fun run(url: String, cityName: String?) {
         val request = okhttp3.Request.Builder()
             .url(url)
             .build()
@@ -109,18 +113,19 @@ class ListActivity : AppCompatActivity() {
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                 val jsonData: String = response.body()!!.string()
                 val Jobject = JSONObject(jsonData)
-
-
-
                 System.out.println("ayyyyyyyyyy"+Jobject)
-
 
                 val jsonObject = JSONTokener(Jobject.toString()).nextValue() as JSONObject
                 val consolidated_weather = jsonObject.getJSONArray("consolidated_weather")
                 val state_name_arrayList = ArrayList<String>()
+                var date_list=ArrayList<String>()
 
                 //current degree
                 val current_degree = consolidated_weather.getJSONObject(0).getString("the_temp")
+                //min degree
+                val min_degree = consolidated_weather.getJSONObject(0).getString("min_temp")
+                //max degree
+                val max_degree = consolidated_weather.getJSONObject(0).getString("max_temp")
 
 
                 for (i in 0 until consolidated_weather.length()){
@@ -128,11 +133,21 @@ class ListActivity : AppCompatActivity() {
                     val weather_state_name = consolidated_weather.getJSONObject(i).getString("weather_state_name")
                     state_name_arrayList.add(weather_state_name)
                 }
-                System.out.println(state_name_arrayList)
+                for (i in 0 until consolidated_weather.length()){
+                    //weather_state_name
+                    val date_list_name= consolidated_weather.getJSONObject(i).getString("applicable_date")
+                    date_list.add(date_list_name)
+                }
+
+
                 val thread = Thread {
                     val changeWeather = Intent(this@ListActivity,WeatherActivity::class.java)
                     changeWeather.putExtra("state_name_arrayList",state_name_arrayList)
+                    changeWeather.putExtra("date_list",date_list)
                     changeWeather.putExtra("current_degree",current_degree)
+                    changeWeather.putExtra("min_degree",min_degree)
+                    changeWeather.putExtra("max_degree",max_degree)
+                    changeWeather.putExtra("city_name",cityName)
                     startActivity(changeWeather)
 
                 }
@@ -148,6 +163,31 @@ class ListActivity : AppCompatActivity() {
     }
 
 
+    fun runWeekApi(woeidValue : String ) {
+        val sdf = SimpleDateFormat("yyyy/M/dd")
+        val currentDate = sdf.format(Date())
+        var url = "https://www.metaweather.com/api/location/" + woeidValue + "/" + currentDate
+        System.out.println("url"+url)
+        val request = okhttp3.Request.Builder()
+            .url(url)
+            .build()
+
+
+        client.newCall(request).enqueue(object : okhttp3.Callback{
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                val jsonData: String = response.body()!!.string()
+                val JArray = JSONArray(jsonData)
+                System.out.println("tarihlijson"+JArray)
+            }
+
+
+        })
+
+    }
 
 
 }

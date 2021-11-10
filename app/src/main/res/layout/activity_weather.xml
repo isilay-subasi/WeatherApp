@@ -8,35 +8,47 @@
     android:background="@drawable/main_bg"
     tools:context=".WeatherActivity">
 
-    <TextView
-        android:fontFamily="sans-serif-thin"
-        android:layout_marginTop="50dp"
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:text="Location"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
         android:layout_height="wrap_content">
 
-    </TextView>
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/textCity"
+            android:fontFamily="sans-serif-thin"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:text="Location"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:layout_height="wrap_content">
+
+        </TextView>
+    </LinearLayout>
+
+
 
 <LinearLayout
+    android:layout_gravity="center"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_gravity="center"
     android:layout_height="wrap_content">
+
     <ImageView
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
+
         android:id="@+id/main_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         tools:srcCompat="@tools:sample/avatars" />
 </LinearLayout>
 
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -44,6 +56,7 @@
 
 
         <TextView
+            android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/white"
             android:id="@+id/current_value"
@@ -53,6 +66,208 @@
             android:textSize="90sp"
             android:text="16.91°C"
  />
+
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/textMin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Min Temp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@color/white">
+
+        </TextView>
+        <Space
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
+
+        </Space>
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/textMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:text="Max Temp"
+            android:textSize="16sp"
+            android:textColor="@color/white">
+
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/red"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+     <TextView
+         android:id="@+id/firstDateText"
+         android:paddingTop="10dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textSize="24sp"
+
+         android:fontFamily="sans-serif-thin"
+         android:textStyle="bold"
+         android:textColor="@color/white"
+         android:text="10 11 2021">
+
+     </TextView>
+    <ImageView
+        android:id="@+id/firstDateImage"
+        android:layout_marginLeft="180dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp">
+
+    </ImageView>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/red"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/secondDateText"
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="10 11 2021">
+
+        </TextView>
+        <ImageView
+            android:id="@+id/secondDateImage"
+            android:layout_marginLeft="180dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+        </ImageView>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/red"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/thirdDateText"
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="10 11 2021">
+
+        </TextView>
+        <ImageView
+            android:id="@+id/thirdDateImage"
+            android:layout_marginLeft="180dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+        </ImageView>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/red"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/endDateText"
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="10 11 2021">
+
+        </TextView>
+        <ImageView
+            android:id="@+id/endDateImage"
+            android:layout_marginLeft="180dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+        </ImageView>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/red"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/endOneDateText"
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="10 11 2021">
+
+        </TextView>
+        <ImageView
+            android:id="@+id/endOneImage"
+            android:layout_marginLeft="180dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+        </ImageView>
+
+
 
     </LinearLayout>
 
