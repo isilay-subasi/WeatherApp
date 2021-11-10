@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 apiInterface.enqueue( object : Callback<List<MyDataItem>>{
                     override fun onResponse(call: Call<List<MyDataItem>>?, response: Response<List<MyDataItem>>?) {
 
-                        var locationList : List<MyDataItem>? = response?.body() as List<MyDataItem>
+                        var locationList : List<MyDataItem> = response?.body() as List<MyDataItem>
                         var locationName = arrayOfNulls<String>(locationList!!.size)
 
                         for (i in locationList!!.indices){

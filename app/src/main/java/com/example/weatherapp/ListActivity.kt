@@ -1,24 +1,25 @@
 package com.example.weatherapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.android.volley.Request
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.weatherapp.databinding.ActivityListBinding
 import com.example.weatherapp.model.WeatherData
-import com.example.weatherapp.service.ApiWeatherInterface
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import org.json.JSONException
+import org.json.JSONObject
+import org.json.JSONTokener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+
 
 class ListActivity : AppCompatActivity() {
     private lateinit var binding : ActivityListBinding
@@ -65,35 +66,13 @@ class ListActivity : AppCompatActivity() {
                         parent: AdapterView<*>, view: View,
                         position: Int, id: Long
                     ) {
-
                         // value of item that is clicked
                         val itemValue = binding.listView.getItemAtPosition(position) as String
                         woeid[position]=cityList!![position]!!.woeid.toString()
                         System.out.println(woeid[position].toString()+"/")// woeid
 
-                        run("https://www.metaweather.com/api/location/2487956/")
-
-/*
-
-                        val apiWeatherInterface = ApiWeatherInterface.create().getData(woeid[position].toString())
-                        apiWeatherInterface.enqueue(object : Callback<List<WeatherData>>{
-                            override fun onResponse(
-                                call: Call<List<WeatherData>>,
-                                response: Response<List<WeatherData>>
-                            ) {
-
-                                System.out.println("deneeee"+response)
-                            }
-
-                            override fun onFailure(
-                                call: Call<List<WeatherData>>,
-                                t: Throwable
-                            ) {
-
-                            }
-
-                        })
- */
+                        var urlString : String = woeid[position].toString()+"/"
+                        run("https://www.metaweather.com/api/location/"+urlString)
 
                     }
                 }
@@ -121,15 +100,43 @@ class ListActivity : AppCompatActivity() {
             .url(url)
             .build()
 
+
         client.newCall(request).enqueue(object : okhttp3.Callback{
             override fun onFailure(call: okhttp3.Call, e: IOException) {
 
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                val jsonData: String = response.body()!!.string()
+                val Jobject = JSONObject(jsonData)
 
-                val responseStr = response.body().toString()
-                System.out.println("ayyyyyyyyyy"+responseStr)
+
+
+                System.out.println("ayyyyyyyyyy"+Jobject)
+
+
+                val jsonObject = JSONTokener(Jobject.toString()).nextValue() as JSONObject
+                val consolidated_weather = jsonObject.getJSONArray("consolidated_weather")
+                val state_name_arrayList = ArrayList<String>()
+
+                //current degree
+                val current_degree = consolidated_weather.getJSONObject(0).getString("the_temp")
+
+
+                for (i in 0 until consolidated_weather.length()){
+                    //weather_state_name
+                    val weather_state_name = consolidated_weather.getJSONObject(i).getString("weather_state_name")
+                    state_name_arrayList.add(weather_state_name)
+                }
+                System.out.println(state_name_arrayList)
+                val thread = Thread {
+                    val changeWeather = Intent(this@ListActivity,WeatherActivity::class.java)
+                    changeWeather.putExtra("state_name_arrayList",state_name_arrayList)
+                    changeWeather.putExtra("current_degree",current_degree)
+                    startActivity(changeWeather)
+
+                }
+                thread.start()
 
             }
 
@@ -144,6 +151,8 @@ class ListActivity : AppCompatActivity() {
 
 
 }
+
+
 
 
 
