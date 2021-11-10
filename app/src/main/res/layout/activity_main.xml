@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"  >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:text="Your Location">
+
+      </TextView>
+
+      <TextView
+          android:id="@+id/textLocation"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="16sp" />
+      <TextView
+          android:id="@+id/textCity"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="16sp" />
+  </LinearLayout>
+
+<LinearLayout
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nearby Locations"
+        android:textSize="16sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <ListView
+        android:id="@+id/locationListView"
+        android:layout_width="wrap_content"
+        android:layout_height="550dp" />
+
+</LinearLayout>
+    <Button
+        android:id="@+id/apicallBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List Cities Near Me"
+        android:textStyle="bold">
+
+    </Button>
+
+
+
+</LinearLayout>
