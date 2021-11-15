@@ -22,4 +22,9 @@ The  **Retrofit** library is used to send this request.
 **OkHttp** library is used for this request. <hr>
 
 ## Outputs
-
+<p float="left">
+  <img src="https://github.com/isilay-subasi/WeatherApp/blob/main/images/birinci.PNG" width="230" />
+  <img src="https://github.com/isilay-subasi/WeatherApp/blob/main/images/ikinci.PNG" width="230" />
+  <img src="https://github.com/isilay-subasi/WeatherApp/blob/main/images/ucuncu.PNG" width="230" />
+  <img src="https://github.com/isilay-subasi/WeatherApp/blob/main/images/d%C3%B6rd%C3%BCnc%C3%BC.PNG" width="230" />
+</p><br>
