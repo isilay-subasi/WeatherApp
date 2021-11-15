@@ -17,7 +17,7 @@
           android:layout_height="wrap_content"
           android:textSize="16sp"
           android:textStyle="bold"
-          android:text="Your Location">
+          android:text="@string/your_location">
 
       </TextView>
 
@@ -42,7 +42,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nearby Locations"
+        android:text="@string/nearby_location"
         android:textSize="16sp"
         android:textStyle="bold">
 
@@ -58,7 +58,7 @@
         android:id="@+id/apicallBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List Cities Near Me"
+        android:text="@string/button_list"
         android:textStyle="bold">
 
     </Button>

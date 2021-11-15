@@ -21,7 +21,7 @@
             android:fontFamily="sans-serif-thin"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:text="Location"
+            android:text="@string/location_text"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="24sp"
@@ -84,7 +84,7 @@
             android:id="@+id/textMin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Min Temp"
+            android:text="@string/min_temp"
             android:textSize="16sp"
             android:fontFamily="sans-serif-thin"
             android:textColor="@color/white">
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
-            android:text="Max Temp"
+            android:text="@string/max_temp"
             android:textSize="16sp"
             android:textColor="@color/white">
 
