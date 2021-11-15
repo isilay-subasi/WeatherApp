@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private var PERMISSION_ID = 1000
     var fullLocation :String?=null
 
+
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,22 +66,30 @@ class MainActivity : AppCompatActivity() {
                 apiInterface.enqueue( object : Callback<List<MyDataItem>>{
                     override fun onResponse(call: Call<List<MyDataItem>>?, response: Response<List<MyDataItem>>?) {
 
-                        var locationList : List<MyDataItem> = response?.body() as List<MyDataItem>
-                        var locationName = arrayOfNulls<String>(locationList!!.size)
+                        System.out.println("isil:"+ response!!.body())
 
-                        for (i in locationList!!.indices){
-                            locationName[i] = locationList!![i]!!.latt_long
+                        if(response!!.body() != null){
+                            var locationList : List<MyDataItem> = response?.body() as List<MyDataItem>
+
+                            var locationName = arrayOfNulls<String>(locationList.size)
+
+                            for (i in locationList!!.indices){
+                                locationName[i] = locationList!![i]!!.latt_long
+                            }
+                            var adapter = ArrayAdapter<String>(applicationContext,android.R.layout.simple_dropdown_item_1line,locationName)
+                            binding.locationListView.adapter=adapter
+                        }else{
+                            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(applicationContext)
+                            getLastLocation()
+                            locationList()
                         }
-                        var adapter = ArrayAdapter<String>(applicationContext,android.R.layout.simple_dropdown_item_1line,locationName)
-                        binding.locationListView.adapter=adapter
-
                     }
                     override fun onFailure(call: Call<List<MyDataItem>>?, t: Throwable?) {
 
                     }
                 })
             },
-            1500 // value in milliseconds
+            1000 // value in milliseconds
         )
     }
 
