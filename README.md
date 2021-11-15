@@ -26,8 +26,10 @@ The  **Retrofit** library is used to send this request.
   <img src="https://github.com/isilay-subasi/WeatherApp/blob/main/images/ikinci.PNG" width="200" />
   <img src="https://github.com/isilay-subasi/WeatherApp/blob/main/images/ucuncu.PNG" width="200" />
   <img src="https://github.com/isilay-subasi/WeatherApp/blob/main/images/d%C3%B6rd%C3%BCnc%C3%BC.PNG" width="200" />
+  <hr>
 
 ### Installation
+<hr>
 
 + Clone the repo to your local machine `git clone https://github.com/isilay-subasi/WeatherApp.git`
 
@@ -35,10 +37,16 @@ The  **Retrofit** library is used to send this request.
 
 + Wait until you make sure the gradle packages are finished installing.( Watch status bar)
 
-+ If your Android Studio version is less than 4.2.1, please upgrade your Android Studio to at least 4.2.1 version.
++ If your Android Studio version is less than 4.2.1
 
-+ Or open the build.gradle file and set it to your Android Studio version from the dependecies section.
+>+ please upgrade your Android Studio to at least 4.2.1 version.
+
+> Or
+
+
+>+ open the build.gradle file and set it to your Android Studio version from the dependencies section.
 
 ### Usage
+<hr>
 
-+ run the project 
++ run the project after installation
