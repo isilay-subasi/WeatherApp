@@ -220,18 +220,6 @@ class WeatherActivity : AppCompatActivity() {
         }
 
 
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 }

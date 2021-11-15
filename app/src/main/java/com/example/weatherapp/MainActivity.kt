@@ -17,6 +17,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.weatherapp.databinding.ActivityMainBinding
+import com.example.weatherapp.model.MyDataItem
+import com.example.weatherapp.service.ApiInterface
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -47,9 +49,6 @@ class MainActivity : AppCompatActivity() {
         getLastLocation()
         locationList()
 
-
-
-
         binding.apicallBtn.setOnClickListener {
             val changePage = Intent(this, ListActivity::class.java)
             changePage.putExtra("fulllocation", fullLocation)
@@ -58,10 +57,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //Function to list locations
     fun locationList(){
         Handler(Looper.getMainLooper()).postDelayed(
             {
-                // This method will be executed once the timer is over
                 val apiInterface = ApiInterface.create().getData(fullLocation.toString())
                 apiInterface.enqueue( object : Callback<List<MyDataItem>>{
                     override fun onResponse(call: Call<List<MyDataItem>>?, response: Response<List<MyDataItem>>?) {
@@ -72,21 +71,10 @@ class MainActivity : AppCompatActivity() {
                         for (i in locationList!!.indices){
                             locationName[i] = locationList!![i]!!.latt_long
                         }
-
                         var adapter = ArrayAdapter<String>(applicationContext,android.R.layout.simple_dropdown_item_1line,locationName)
                         binding.locationListView.adapter=adapter
 
-
-
-                        if(response?.body() != null){
-
-                            System.out.println("isil:"+response.body())
-
-
-                        }
-
                     }
-
                     override fun onFailure(call: Call<List<MyDataItem>>?, t: Throwable?) {
 
                     }
@@ -94,23 +82,19 @@ class MainActivity : AppCompatActivity() {
             },
             1000 // value in milliseconds
         )
-
-
-
-
     }
 
 
 
 
-    //Now we will create a function that will allow us to get the last location
+    // Function that allows us to get our last position
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLastLocation(){
-        //first we check permission
+        //Check permission
         if (CheckPermission()){
-                //Now we check the location service is enabled
+            // Check the location service is enabled
             if (isLocationEnabled()){
-                //Now lets get the location
+                //Lets get the location
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     var location = task.result
                     if (location == null){
@@ -143,9 +127,6 @@ class MainActivity : AppCompatActivity() {
         fusedLocationProviderClient!!.requestLocationUpdates(
             locationRequest,locationCallback, Looper.myLooper()
         )
-
-
-
     }
 
     private val locationCallback = object : LocationCallback(){
@@ -158,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    //First we need to create a function that will check the uses permissions
+    //Need to create a function that will check the uses permissions
     private fun CheckPermission() : Boolean{
         if(
             ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
@@ -169,8 +150,7 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    //Now we need to create a function that will allow us to get user permission
-
+    //Create a function that will allow us to get user permission
     private fun RequestPermission(){
         ActivityCompat.requestPermissions(
             this,
@@ -179,8 +159,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    //Now we need a function that check if the location service of the device is enabled
-
+    //A function that check if the location service of the device is enabled
     private fun isLocationEnabled() : Boolean{
 
         var locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager

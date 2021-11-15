@@ -1,4 +1,4 @@
-package com.example.weatherapp
+package com.example.weatherapp.model
 
 data class MyDataItem(
     val distance: Int,

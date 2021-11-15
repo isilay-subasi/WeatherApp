@@ -9,15 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.example.weatherapp.databinding.ActivityListBinding
+import com.example.weatherapp.model.MyDataItem
+import com.example.weatherapp.service.ApiInterface
 import okhttp3.OkHttpClient
-import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -45,20 +45,16 @@ class ListActivity : AppCompatActivity() {
                 var city = arrayOfNulls<String>(cityList!!.size)
                 var woeid = arrayOfNulls<String>(woeidList!!.size)
 
-
                 for (i in cityList!!.indices){
                     city[i] = cityList!![i]!!.title
                     woeid[i]=cityList!![i]!!.woeid.toString()
 
                 }
-
                 //woeid list
                 for(i in woeidList!!.indices){
                     woeid[i] = woeidList!![i]!!.woeid.toString()
                     System.out.println("woeid:"+woeid[i])
                 }
-
-
                 var adapter = ArrayAdapter<String>(applicationContext,android.R.layout.simple_dropdown_item_1line,city)
                 binding.listView.adapter=adapter
                 binding.listView.onItemClickListener = object : AdapterView.OnItemClickListener {
@@ -75,24 +71,14 @@ class ListActivity : AppCompatActivity() {
 
                         var urlString : String = woeid[position].toString()+"/"
                         run("https://www.metaweather.com/api/location/"+urlString,city[position])
-
-
-
                     }
                 }
-
-
                 if(response?.body() != null){
-
-                    System.out.println("isil:"+response.body())
-
-
+                    System.out.println("response:"+response.body())
                 }
 
             }
-
             override fun onFailure(call: Call<List<MyDataItem>>?, t: Throwable?) {
-
             }
         })
 
@@ -103,18 +89,13 @@ class ListActivity : AppCompatActivity() {
         val request = okhttp3.Request.Builder()
             .url(url)
             .build()
-
-
         client.newCall(request).enqueue(object : okhttp3.Callback{
             override fun onFailure(call: okhttp3.Call, e: IOException) {
 
             }
-
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                 val jsonData: String = response.body()!!.string()
                 val Jobject = JSONObject(jsonData)
-                System.out.println("ayyyyyyyyyy"+Jobject)
-
                 val jsonObject = JSONTokener(Jobject.toString()).nextValue() as JSONObject
                 val consolidated_weather = jsonObject.getJSONArray("consolidated_weather")
                 val state_name_arrayList = ArrayList<String>()
@@ -134,7 +115,7 @@ class ListActivity : AppCompatActivity() {
                     state_name_arrayList.add(weather_state_name)
                 }
                 for (i in 0 until consolidated_weather.length()){
-                    //weather_state_name
+                    //date_list_name
                     val date_list_name= consolidated_weather.getJSONObject(i).getString("applicable_date")
                     date_list.add(date_list_name)
                 }
@@ -154,36 +135,6 @@ class ListActivity : AppCompatActivity() {
                 thread.start()
 
             }
-
-        })
-
-
-
-
-    }
-
-
-    fun runWeekApi(woeidValue : String ) {
-        val sdf = SimpleDateFormat("yyyy/M/dd")
-        val currentDate = sdf.format(Date())
-        var url = "https://www.metaweather.com/api/location/" + woeidValue + "/" + currentDate
-        System.out.println("url"+url)
-        val request = okhttp3.Request.Builder()
-            .url(url)
-            .build()
-
-
-        client.newCall(request).enqueue(object : okhttp3.Callback{
-            override fun onFailure(call: okhttp3.Call, e: IOException) {
-
-            }
-
-            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                val jsonData: String = response.body()!!.string()
-                val JArray = JSONArray(jsonData)
-                System.out.println("tarihlijson"+JArray)
-            }
-
 
         })
 
