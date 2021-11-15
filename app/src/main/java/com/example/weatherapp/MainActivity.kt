@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             },
-            1000 // value in milliseconds
+            1500 // value in milliseconds
         )
     }
 
